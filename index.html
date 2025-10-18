@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flight Reservation Form</title>
+    <title>Flight Reservation Form - Saudi Arabia to Pakistan</title>
     <style>
         * {
             margin: 0;
@@ -475,7 +475,7 @@
     <div class="container no-print">
         <header>
             <h1>Flight Reservation System</h1>
-            <p class="subtitle">Book your flight and generate a printable itinerary</p>
+            <p class="subtitle">Book your flight from Saudi Arabia to Pakistan and generate a printable itinerary</p>
         </header>
         
         <div class="card">
@@ -505,7 +505,7 @@
                                     <option value="EAM">Najran - Najran Regional (EAM)</option>
                                     <option value="ABT">Al Baha - Al Baha Regional (ABT)</option>
                                     <option value="HAS">Ha'il - Ha'il Regional (HAS)</option>
-                                    <option value="YNB">Yanbu - Yanbu Regional (YNB)</option>
+                                    <option value="YNB">Yanbu - Yanbu Regional (YNA)</option>
                                     <option value="BHH">Bisha - Bisha Regional (BHH)</option>
                                     <option value="AQI">Qaisumah - Qaisumah Regional (AQI)</option>
                                     <option value="SHW">Sharurah - Sharurah Regional (SHW)</option>
@@ -540,8 +540,16 @@
                                 <label for="airline">Airline</label>
                                 <select id="airline" required>
                                     <option value="">Select airline</option>
-                                    <option value="SV">Saudi Airlines (SV)</option>
-                                    <option value="PK">Pakistan Airways (PK)</option>
+                                    <!-- Saudi Airlines -->
+                                    <option value="SV">Saudia (SV)</option>
+                                    <option value="XY">Flynas (XY)</option>
+                                    <option value="F3">Flyadeal (F3)</option>
+                                    <option value="6S">SaudiGulf Airlines (6S)</option>
+                                    <!-- Pakistani Airlines -->
+                                    <option value="PK">Pakistan International Airlines (PK)</option>
+                                    <option value="PA">Air Blue (PA)</option>
+                                    <option value="ER">Serene Air (ER)</option>
+                                    <option value="PF">AirSial (PF)</option>
                                 </select>
                             </div>
                         </div>
@@ -658,7 +666,7 @@
     <div class="itinerary-preview" id="itineraryPreview">
         <div class="preview-header">
             <div class="trip-title" id="previewTripTitle">TRIP TO KARACHI, PAKISTAN</div>
-            <div class="passenger-info">PREPARED FOR<br><strong id="previewPassengerName">ANSARI/HINDA AKIF</strong></div>
+            <div class="passenger-info">PREPARED FOR<br><strong id="previewPassengerName">MR JOHN SMITH</strong></div>
         </div>
         
         <div class="reservation-codes">
@@ -680,13 +688,13 @@
                     <div class="airline-logo-container">
                         <img id="previewAirlineLogo" src="" alt="Airline Logo" class="airline-logo">
                         <div>
-                            <strong id="previewAirlineName">SAUDI AIRLINES</strong><br>
+                            <strong id="previewAirlineName">SAUDIA</strong><br>
                             <span id="previewFlightCode">SV 0057</span>
                         </div>
                     </div>
                     <div>
                         <div class="info-label">Duration:</div>
-                        <div class="info-value" id="previewDuration">3hr(s) 30min(s)</div>
+                        <div class="info-value" id="previewDuration">2hr(s) 30min(s)</div>
                     </div>
                     <div>
                         <div class="info-label">Cabin:</div>
@@ -711,7 +719,7 @@
                     <div class="arrival">
                         <div class="airport-code" id="previewArrivalCode">KHI</div>
                         <div id="previewArrivalCity">KARACHI, PAKISTAN</div>
-                        <div class="time">Arriving At: <span id="previewArrivalTime">12:30</span></div>
+                        <div class="time">Arriving At: <span id="previewArrivalTime">11:30</span></div>
                         <div>Terminal: Jinnah International</div>
                     </div>
                 </div>
@@ -739,7 +747,7 @@
                     <div class="info-label">Passenger Name(s) & Ticket Numbers:</div>
                     <div class="preview-passenger-list" id="previewPassengerList">
                         <div class="preview-passenger-item">
-                            <span class="passenger-name">ANSARI/HINDA AKIF</span>
+                            <span class="passenger-name">MR JOHN SMITH</span>
                             <span class="passenger-ticket">0722999963076</span>
                         </div>
                     </div>
@@ -799,12 +807,16 @@
             
             // Airline data
             const airlines = {
-                'SV': {
-                    name: 'SAUDI AIRLINES'
-                },
-                'PK': {
-                    name: 'PAKISTAN AIRWAYS'
-                }
+                // Saudi Airlines
+                'SV': { name: 'SAUDIA' },
+                'XY': { name: 'FLYNAS' },
+                'F3': { name: 'FLYADEAL' },
+                '6S': { name: 'SAUDI GULF AIRLINES' },
+                // Pakistani Airlines
+                'PK': { name: 'PAKISTAN INTERNATIONAL AIRLINES' },
+                'PA': { name: 'AIR BLUE' },
+                'ER': { name: 'SERENE AIR' },
+                'PF': { name: 'AIRSIAL' }
             };
             
             // Set default date to today
@@ -1006,16 +1018,19 @@
             }
             
             // Calculate flight duration considering time zone difference
-            // Pakistan is 2 hours ahead of Saudi Arabia
+            // Pakistan is 2.5 hours ahead of Saudi Arabia
             function calculateDuration(depDate, depTime, arrDate, arrTime) {
                 // Create date objects for departure and arrival
                 const depDateTime = new Date(`${depDate}T${depTime}:00`);
                 const arrDateTime = new Date(`${arrDate}T${arrTime}:00`);
                 
-                // Account for time zone difference (Saudi Arabia is 2 hours behind Pakistan)
-                // So actual flight time = (arrival - departure) - 2 hours
-                const timeZoneDiff = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
-                const actualFlightTime = (arrDateTime - depDateTime) - timeZoneDiff;
+                // Convert arrival time from Pakistan time to Saudi time
+                // Since Pakistan is 2.5 hours ahead, subtract 2.5 hours from arrival time
+                const timeZoneDiff = 2.5 * 60 * 60 * 1000; // 2.5 hours in milliseconds
+                const arrDateTimeSaudi = new Date(arrDateTime - timeZoneDiff);
+                
+                // Now calculate the difference between departure and adjusted arrival
+                const actualFlightTime = arrDateTimeSaudi - depDateTime;
                 
                 // Calculate hours and minutes
                 const hours = Math.floor(actualFlightTime / (1000 * 60 * 60));
