@@ -550,6 +550,8 @@
                                     <option value="PA">Air Blue (PA)</option>
                                     <option value="ER">Serene Air (ER)</option>
                                     <option value="PF">AirSial (PF)</option>
+                                    <!-- Add Fly Jinnah here -->
+                                    <option value="9P">Fly Jinnah (9P)</option>
                                 </select>
                             </div>
                         </div>
@@ -744,20 +746,34 @@
                 </div>
                 
                 <div class="passenger-details">
-                    <div class="info-label">Passenger Name(s) & Ticket Numbers:</div>
-                    <div class="preview-passenger-list" id="previewPassengerList">
+div class="passenger-details">
+                    <div class="info-label">Passenger Name(s) &                    <div class="info-label">Passenger Name(s) & Ticket Numbers:</div Ticket Numbers:</div>
+>
+                    <div class="preview-passenger-list                    <div class="preview-passenger-list" id" id="previewPassengerList">
+                        <div class="="previewPassengerList">
                         <div class="preview-passenger-item">
-                            <span class="passenger-name">MR JOHN SMITH</span>
-                            <span class="passenger-ticket">0722999963076</span>
+                            <span class="passpreview-passenger-item">
+                            <span class="passenger-name">MR JOHN SMenger-name">MR JOHN SMITHITH</span>
+                            <span</span>
+                            <span class="passenger-ticket class="passenger-ticket">0722999963076</span>
+                        </div>
+                   ">0722999963076</span>
                         </div>
                     </div>
                 </div>
+ </div>
+                </div>
             </div>
+        </div            </div>
         </div>
         
-        <div class="contact-details" id="previewContactDetails">
-            <div class="info-label">Customer Contact Details:</div>
-            <div class="contact-info">
+        <div class="contact-details" id=">
+        
+        <div class="contact-details" idpreviewContactDetails">
+           ="previewContactDetails">
+            <div class="info-label"> <div class="info-label">Customer Contact Details:</div>
+           Customer Contact Details:</div>
+            <div class="contact <div class="contact-info">
                 <div class="contact-item">
                     <div class="info-label">Email:</div>
                     <div class="info-value" id="previewCustomerEmail">customer@example.com</div>
@@ -817,7 +833,78 @@
                 'PK': { name: 'PAKISTAN INTERNATIONAL AIRLINES' },
                 'PA': { name: 'AIR BLUE' },
                 'ER': { name: 'SERENE AIR' },
-                'PF': { name: 'AIRSIAL' }
+                'PF': { name: 'AIRSIAL' },
+                // Add Fly Jinnah here
+                '9P': { name: 'FLY JINNAH' }
+            };
+            
+            // Set default date to today
+            const today = new Date();
+            const formattedDate = today.toISOString().split('T')[0];
+            document.getElementById('departureDate').value = formattedDate;
+            document.getElementById('arrivalDate').value = formatted-info">
+                <div class="contact-item">
+                    <div class="info-label">Email:</div>
+                    <div class="info-value" id="previewCustomerEmail">customer@example.com</div>
+                </div>
+                <div class="contact-item">
+                    <div class="info-label">Mobile:</div>
+                    <div class="info-value" id="previewCustomerMobile">+966 123 456 7890</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="company-logo-container">
+                <img id="previewFooterCompanyLogo" src="" alt="ALMATAR.COM Logo" class="company-logo">
+                <div>
+                    <strong>ALMATAR.COM</strong><br>920005511
+                </div>
+            </div>
+        </div>
+        
+        <div class="button-group no-print">
+            <button class="btn btn-print" id="printBtn">Print Itinerary</button>
+            <button class="btn" id="editBtn">Edit Details</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all elements
+            const form = document.getElementById('flightForm');
+            const generateBtn = document.getElementById('generateBtn');
+            const printBtn = document.getElementById('printBtn');
+            const editBtn = document.getElementById('editBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const addPassengerBtn = document.getElementById('addPassengerBtn');
+            const itineraryPreview = document.getElementById('itineraryPreview');
+            const logoInput = document.getElementById('airlineLogo');
+            const logoPreview = document.getElementById('logoPreview');
+            const companyLogoInput = document.getElementById('companyLogo');
+            const companyLogoPreview = document.getElementById('companyLogoPreview');
+            const passengerContainer = document.getElementById('passengerContainer');
+            const previewPassengerList = document.getElementById('previewPassengerList');
+            const previewContactDetails = document.getElementById('previewContactDetails');
+            
+            let uploadedLogo = null;
+            let uploadedCompanyLogo = null;
+            let passengerCount = 1;
+            
+            // Airline data
+            const airlines = {
+                // Saudi Airlines
+                'SV': { name: 'SAUDIA' },
+                'XY': { name: 'FLYNAS' },
+                'F3': { name: 'FLYADEAL' },
+                '6S': { name: 'SAUDI GULF AIRLINES' },
+                // Pakistani Airlines
+                'PK': { name: 'PAKISTAN INTERNATIONAL AIRLINES' },
+                'PA': { name: 'AIR BLUE' },
+                'ER': { name: 'SERENE AIR' },
+                'PF': { name: 'AIRSIAL' },
+                // Add Fly Jinnah here
+                '9P': { name: 'FLY JINNAH' }
             };
             
             // Set default date to today
@@ -826,24 +913,61 @@
             document.getElementById('departureDate').value = formattedDate;
             document.getElementById('arrivalDate').value = formattedDate;
             
+            //Date;
+            
             // Airport data
             const airports = {
                 // Saudi Arabia departure airports
                 'JED': { city: 'JEDDAH, SAUDI ARABIA', country: 'SAUDI ARABIA' },
                 'RUH': { city: 'RIYADH, SAUDI ARABIA', country: 'SAUDI ARABIA' },
-                'DMM': { city: 'DAMMAM, SAUDI ARABIA', country: 'SAUDI ARABIA' },
-                'MED': { city: 'MEDINA, SAUDI ARABIA', country: 'SAUDI ARABIA' },
-                'AHB': { city: 'ABHA, SAUDI ARABIA', country: 'SAUDI ARABIA' },
-                'TIF': { city: 'TAIF, SAUDI ARABIA', country: 'SAUDI ARABIA' },
-                'TUU': { city: 'TABUK, SAUDI ARABIA', country: 'SAUDI ARABIA' },
-                'ELQ': { city: 'BURAIDAH, SAUDI ARABIA', country: 'SAUDI ARABIA' },
-                'URY': { city: 'GURAYAT, SAUDI ARABIA', country: 'SAUDI ARABIA' },
-                'HOF': { city: 'AL AHSA, SAUDI ARABIA', country: 'SAUDI ARABIA' },
-                'AJF': { city: 'AL JOUF, SAUDI ARABIA', country: 'SAUDI ARABIA' },
-                'RAH': { city: 'RAFHA, SAUDI ARABIA', country: 'SAUDI ARABIA' },
-                'EAM': { city: 'NAJRAN, SAUDI ARABIA', country: 'SAUDI ARABIA' },
-                'ABT': { city: 'AL BAHA, SAUDI ARABIA', country: 'SAUDI ARABIA' },
+                'DMM': { city: 'DAMMAM, SAUDI ARABIA', country: Airport data
+            const airports = {
+                // Saudi Arabia departure airports
+                'JED': { city: 'JEDDAH, SAUDI ARABIA', country: 'SAUDI ARABIA' },
+                'RUH': { city: 'RIYADH, SAUDI ARABIA', country: 'SAUDI ARABIA' },
+                'DMM': { city: 'DAMMAM, SAUDI ARAB 'SAUDI ARABIA' },
+                'MED': {IA', country: 'SAUDI ARABIA' },
+                'MED': { city: 'MEDINA, SAUDI ARAB city: 'MEDINA, SAUDI ARABIA',IA', country: 'SAUDI ARABIA' },
+                country: 'SAUDI AR 'AHB': { city: 'ABHA, SAUDABIA' },
+                'AHB': { city: 'ABHA, SAUDI ARI ARABIA', countryABIA', country: 'SAUDI ARABIA' },
+: 'SAUDI ARABIA' },
+                'TIF': { city:                'TIF 'TAIF, SAUDI ARABIA', country: '': { city: 'TAIF, SAUDI ARABIA', country: 'SAUDI ARABIA' },
+                'TUU': { city: 'TABUK, SAUDI ARABIA', country: 'SASAUDI ARABIA' },
+                'TUU': { city: 'TABUK, SAUDI ARABIA', country: 'SAUDIUDI ARABIA' },
+                'ELQ': { city ARABIA' },
+                ': 'BURAIDAH, SAUDI ARABELQ': { city: 'BURAIDAH, SAUDI ARABIA', country: 'SAUDI ARABIAIA', country: 'SAUDI ARABIA' },
+               ' },
+                'URY': { city: 'GURAYAT, 'URY': { city: 'GURAYAT, SA SAUDI ARABIAUDI ARABIA', country: 'SAUDI ARAB', country: 'SAUDI ARABIA' },
+                'IA' },
+                'HOFHOF': { city: 'AL AHSA, SAUDI': { city: 'AL AHSA, SAUDI ARAB ARABIA', country: 'SAUDI ARABIAIA', country: 'SAUDI ARABIA' },
+                'AJF': { city' },
+                'AJF': { city: 'AL J: 'AL JOUF, SAUDI ARABIAOUF, SAUDI ARABIA',', country: 'SAUDI ARABIA' },
+ country: 'SAUDI ARABIA' },
+                'RAH': { city                'RAH': { city: 'RAFHA, SA: 'RAFHA, SAUDI ARABIAUDI ARABIA', country: 'SAUDI ARABIA'', country: 'SAUDI ARABIA' },
+                'EAM },
+                'EAM': { city: 'NAJRAN,': { city: 'NAJRAN, SAUDI AR SAUDI ARABIA', country: 'SAUDI ARABIA', country: 'SAUDI ARABIA' },
+ABIA' },
+                'ABT': { city:                'ABT': { city: 'AL BAHA, SA 'AL BAHA, SAUDI ARABIA',UDI ARABIA', country: 'SAUDI ARABIA' },
+                'HAS': country: 'SAUDI ARABIA' },
                 'HAS': { city: 'HAIL, SAUDI ARABIA', country: 'SAUDI ARABIA' },
+                'YNB': { city: 'YANBU, SAUDI ARABIA', country: 'SAUDI ARABIA' },
+                'BHH': { city: 'BISHA, SAUDI ARABIA', country: 'SAUDI ARABIA' },
+                'AQI': { city: 'QAISUMAH, SAUDI ARABIA', country: 'SAUDI ARABIA' },
+                'SHW': { city: 'SHARURAH, SAUDI ARABIA', country: 'SAUDI ARABIA' },
+                'RAE': { city: 'ARAR, SAUDI ARABIA', country: 'SAUDI ARABIA' },
+                'WAE': { city: 'WADI AL DAWASIR, SAUDI ARABIA', country: 'SAUDI ARABIA' },
+                
+                // Pakistan arrival airports
+                'KHI': { city: 'KARACHI, PAKISTAN', country: 'PAKISTAN' },
+                'LHE': { city: 'LAHORE, PAKISTAN', country: 'PAKISTAN' },
+                'ISB': { city: 'ISLAMABAD, PAKISTAN', country: 'PAKISTAN' },
+                'PEW': { city: 'PESHAWAR, PAKISTAN', country: 'PAKISTAN' },
+                'UET': { city: 'QUETTA, PAKISTAN', country: 'PAKISTAN' },
+                'MUX': { city: 'MULTAN, PAKISTAN', country: 'PAKISTAN' },
+                'SKT': { city: 'SIALKOT, PAKISTAN', country: 'PAKISTAN' },
+                'RYK': { city: 'RAHIM YAR KHAN, PAKISTAN', country: 'PAKISTAN' },
+                'GWD': { city: 'GWADAR, PAKISTAN', country: 'PAKISTAN' },
+                'LYP': { city: 'FAIS { city: 'HAIL, SAUDI ARABIA', country: 'SAUDI ARABIA' },
                 'YNB': { city: 'YANBU, SAUDI ARABIA', country: 'SAUDI ARABIA' },
                 'BHH': { city: 'BISHA, SAUDI ARABIA', country: 'SAUDI ARABIA' },
                 'AQI': { city: 'QAISUMAH, SAUDI ARABIA', country: 'SAUDI ARABIA' },
@@ -864,7 +988,15 @@
                 'LYP': { city: 'FAISALABAD, PAKISTAN', country: 'PAKISTAN' }
             };
             
-            // Distances between airports (in miles) - Saudi to Pakistan
+           ALABAD, PAKISTAN', country: 'PAKISTAN' }
+            };
+            
+            // Dist // Distances between airports (in miles) - Saudi to Pakistan
+            const distances = {
+                'JED-KHI': 1500,
+                'JED-LHE': 2000,
+                'JED-ISB': 2100,
+                'JED-PEW':ances between airports (in miles) - Saudi to Pakistan
             const distances = {
                 'JED-KHI': 1500,
                 'JED-LHE': 2000,
@@ -884,321 +1016,652 @@
                 'MED-MUX': 2000,
                 'MED-SKT': 2150,
                 'MED-RYK': 1850,
+                'MED-G 2200,
+                'JED-UET': 1800,
+                'JED-MUX': 1900,
+                'JED-SKT': 2050,
+                'JED-RYK': 1750,
+                'JED-GWD': 1600,
+                'JED-LYP': 1950,
+                'MED-KHI': 1600,
+                'MED-LHE': 2100,
+                'MED-ISB': 2200,
+                'MED-PEW': 2300,
+                'MED-UET': 1900,
+                'MED-MUX': 2000,
+                'MED-SKT': 2150,
+                'MED-RYK': 1850WD': 1700,
+                'MED-LYP': ,
                 'MED-GWD': 1700,
                 'MED-LYP': 2050,
+                'DMM2050,
                 'DMM-KHI': 1400,
                 'DMM-LHE': 1900,
+                'D-KHI': 1400,
+                'DMM-LHE': 1900MM-ISB': 2000,
+                'DMM,
                 'DMM-ISB': 2000,
-                'DMM-PEW': 2100,
-                'DMM-UET': 1700,
+                'DMM-PEW':-PEW': 2100,
+                'DMM-UET 2100,
+                'DMM-UET': 1700': 1700,
+                'DMM-MUX': 180,
                 'DMM-MUX': 1800,
+                'DMM-SKT': 0,
                 'DMM-SKT': 1950,
-                'DMM-RYK': 1650,
+               1950,
+                'DMM-RYK': 'DMM-RYK': 1650,
+                'D 1650,
                 'DMM-GWD': 1500,
-                'DMM-LYP': 1850,
+               MM-GWD': 1500,
+                'DMM-L 'DMM-LYP': 185YP': 1850,
+                'RUH-KHI': 0,
                 'RUH-KHI': 1450,
+                'RUH-LHE':1450,
                 'RUH-LHE': 1950,
-                'RUH-ISB': 2050,
-                'RUH-PEW': 2150,
+                'RUH-IS 1950,
+                'RUH-ISB':B': 2050,
+                'RUH-PEW':  2050,
+                'RUH-PEW': 21502150,
+                'RUH-UET': 175,
                 'RUH-UET': 1750,
-                'RUH-MUX': 1850,
+0,
+                '                'RUH-MUX':RUH-MUX': 1850,
+                'RUH-SKT': 2000,
+                ' 1850,
                 'RUH-SKT': 2000,
                 'RUH-RYK': 1700,
+                'RUH-GWDRUH-RYK': 1700,
                 'RUH-GWD': 1550,
+                'RU': 1550,
                 'RUH-LYP': 1900
             };
             
+            // Add passenger functionH-LYP': 1900
+            };
+            
             // Add passenger function
+            function addPass
             function addPassenger() {
-                if (passengerCount >= 9) {
+                if (passenger() {
+                if (engerCount >= 9) {
+                    alert('Maximum 9 passengers allowedpassengerCount >= 9) {
                     alert('Maximum 9 passengers allowed');
                     return;
                 }
+');
+                    return;
+                }
+                
                 
                 passengerCount++;
+                const passengerEntry = document                passengerCount++;
                 const passengerEntry = document.createElement('div');
+                passengerEntry.className =.createElement('div');
                 passengerEntry.className = 'passenger-entry';
-                passengerEntry.setAttribute('data-passenger-id', passengerCount);
+                passengerEntry.setAttribute('data 'passenger-entry';
+                passengerEntry.setAttribute('data-passenger-passenger-id', passengerCount);
                 passengerEntry.innerHTML = `
-                    <select class="passenger-title" required>
+                   -id', passengerCount);
+                passengerEntry.innerHTML = `
+                    <select class="pass <select class="passenger-title" required>
+                        <optionenger-title" required>
                         <option value="">Title</option>
+                        <option value value="">Title</option>
                         <option value="Mr">Mr</option>
+                        <option="Mr">Mr</option>
                         <option value="Mrs">Mrs</option>
-                        <option value="Miss">Miss</option>
+                        <option value="Mrs">Mrs</option>
+                        <option value="Miss value="Miss">Miss</option>
+                        <option value="Mstr">Miss</option>
                         <option value="Mstr">Mstr</option>
+">Mstr</option>
                     </select>
-                    <input type="text" class="passenger-name" placeholder="Enter full name" required>
-                    <input type="text" class="passenger-ticket" placeholder="Ticket number" required>
-                    <button type="button" class="remove-passenger">×</button>
+                    <                    </select>
+                    <input type="text" class="passinput type="text" class="passenger-name" placeholder="Enterenger-name" placeholder="Enter full name" required>
+                    <input full name" required>
+                    <input type="text" class=" type="text" class="passenger-ticket" placeholder="Ticket number" required>
+                   passenger-ticket" placeholder="Ticket number" required>
+                    <button type="button" <button type="button" class="remove-passenger">×</button class="remove-passenger">×</button>
                 `;
                 
-                passengerContainer.appendChild(passengerEntry);
+               >
+                `;
+                
+                passengerContainer.appendChild passengerContainer.appendChild(passengerEntry);
+                
+                // Add event listener(passengerEntry);
                 
                 // Add event listener to the remove button
+                to the remove button
                 const removeBtn = passengerEntry.querySelector('.remove-passenger');
+                removeBtn.addEventListener('click', function() const removeBtn = passengerEntry.querySelector('.remove-passenger');
                 removeBtn.addEventListener('click', function() {
+                    passengerContainer.removeChild {
                     passengerContainer.removeChild(passengerEntry);
+                    passengerCount(passengerEntry);
                     passengerCount--;
                     
+                    // Hide--;
+                    
                     // Hide remove button if only one passenger remains
-                    if (passengerCount === 1) {
-                        document.querySelector('.remove-passenger').style.display = 'none';
+ remove button if only one passenger remains
+                    if (passengerCount                    if (passengerCount === 1) {
+                        === 1) {
+                        document.querySelector('.remove-passenger').style.display = ' document.querySelector('.remove-passenger').style.display = 'none';
+                    }
+                });
+            }
+            
+            //none';
                     }
                 });
             }
             
             // Handle logo upload
-            logoInput.addEventListener('change', function(e) {
+            logo Handle logo upload
+            logoInput.addEventListener('change', functionInput.addEventListener('change', function(e) {
+                const file = e(e) {
                 const file = e.target.files[0];
+                if.target.files[0];
                 if (file) {
                     const reader = new FileReader();
-                    reader.onload = function(event) {
+ (file) {
+                    const reader = new FileReader();
+                    reader.onload = function                    reader.onload = function(event) {
                         uploadedLogo = event.target.result;
-                        logoPreview.innerHTML = `<img src="${uploadedLogo}" alt="Logo Preview">`;
+                        logoPreview.innerHTML(event) {
+                        uploadedLogo = event.target.result;
+                        logoPreview = `<img src="${uploadedLogo}" alt="Logo Preview.innerHTML = `<img src="${uploadedLogo}" alt="Logo Preview">`;
+                    };
+                    reader">`;
                     };
                     reader.readAsDataURL(file);
+                }.readAsDataURL(file);
                 } else {
                     uploadedLogo = null;
                     logoPreview.innerHTML = '';
                 }
             });
             
-            // Handle company logo upload
-            companyLogoInput.addEventListener('change', function(e) {
+ else {
+                    uploadedLogo = null;
+                    logoPreview.innerHTML = '';
+                }
+            });
+            
+                       // Handle company logo upload
+            companyLogoInput.addEventListener('change // Handle company logo upload
+            companyLogoInput.addEventListener('change', function(e)', function(e) {
+                const file = e.target.files {
                 const file = e.target.files[0];
                 if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(event) {
+                    const[0];
+                if (file) {
+                    const reader = new FileReader reader = new FileReader();
+                    reader.onload = function(event();
+                    reader.onload =) {
                         uploadedCompanyLogo = event.target.result;
-                        companyLogoPreview.innerHTML = `<img src="${uploadedCompanyLogo}" alt="Company Logo Preview">`;
+                        function(event) {
+                        uploadedCompanyLogo = event.target.result;
+                        companyLogoPreview.innerHTML = `<img src="${uploadedCompanyLogo companyLogoPreview.innerHTML = `<img src="${uploadedCompanyLogo}" alt="}" alt="Company Logo Preview">`;
+                    };
+                    reader.readAsCompany Logo Preview">`;
                     };
                     reader.readAsDataURL(file);
                 } else {
-                    uploadedCompanyLogo = null;
+                   DataURL(file);
+                } else {
+                    uploadedCompanyLogo = uploadedCompanyLogo = null;
+                    companyLogoPreview.innerHTML = '';
+ null;
                     companyLogoPreview.innerHTML = '';
                 }
             });
             
-            // Add event listener to add passenger button
+            //                }
+            });
+            
+            // Add event listener to Add event listener to add passenger button
+            addPassengerBtn.addEventListener('click', add add passenger button
             addPassengerBtn.addEventListener('click', addPassenger);
             
+            // Reset formPassenger);
+            
             // Reset form
+            resetBtn.addEventListener('
             resetBtn.addEventListener('click', function() {
+                uploadedLogoclick', function() {
                 uploadedLogo = null;
-                uploadedCompanyLogo = null;
+                = null;
+                uploadedCompany uploadedCompanyLogo = nullLogo = null;
+                logoPreview.innerHTML = '';
+                companyLogoPreview.innerHTML =;
                 logoPreview.innerHTML = '';
                 companyLogoPreview.innerHTML = '';
                 itineraryPreview.style.display = 'none';
+ '';
+                itineraryPreview.style.display = 'none';
                 
                 // Reset passenger count and container
+                passengerCount                
+                // Reset passenger count and container
                 passengerCount = 1;
+                passengerContainer = 1;
                 passengerContainer.innerHTML = `
+                    <div class="passenger-entry.innerHTML = `
                     <div class="passenger-entry" data-passenger-id="1">
-                        <select class="passenger-title" required>
+                        <" data-passenger-id="1">
+                        <select class="passenger-title" requiredselect class="passenger-title" required>
                             <option value="">Title</option>
-                            <option value="Mr">Mr</option>
+                            <option value>
+                            <option value="">Title</option>
+                            <option value="Mr">Mr</option="Mr">Mr</option>
+                            <option value="Mrs">Mrs</option>
+                           >
                             <option value="Mrs">Mrs</option>
                             <option value="Miss">Miss</option>
-                            <option value="Mstr">Mstr</option>
+                            <option value=" <option value="Miss">Miss</option>
+                            <option valueMstr">Mstr</option>
                         </select>
-                        <input type="text" class="passenger-name" placeholder="Enter full name" required>
-                        <input type="text" class="passenger-ticket" placeholder="Ticket number" required>
-                        <button type="button" class="remove-passenger" style="display: none;">×</button>
+="Mstr">Mstr</option>
+                        </select>
+                        <input type="text" class="passenger-name"                        <input type="text" class="passenger-name" placeholder=" placeholder="Enter full name" required>
+                        <input type="text"Enter full name" required>
+                        <input type="text" class="passenger-ticket class="passenger-ticket" placeholder="Ticket number" required>
+                        <button type="button" class="remove-passenger" placeholder="Ticket number" required>
+                        <button type="button" class="remove-passenger" style" style="display: none;">×</button>
+                    </div="display: none;">×</button>
                     </div>
                 `;
             });
             
+            // Generate random>
+                `;
+            });
+ codes
+            function generateRandomCode(length) {
+                const chars =            
             // Generate random codes
             function generateRandomCode(length) {
-                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                const chars = 'ABCDEFGHIJKLMNOPQRST 'ABCDEFGHIJKLMNOPQRSTUVWUVWXYZ0123456789';
                 let result = '';
-                for (let i = 0; i < length; i++) {
+XYZ0123456789';
+                let result = '';
+                for (let i = 0; i                for (let i = 0; i < length; < length; i++) {
+                    result += chars.charAt(Math.floor i++) {
                     result += chars.charAt(Math.floor(Math.random() * chars.length));
                 }
+                return(Math.random() * chars.length));
+ result;
+            }
+            
+            // Calculate flight duration considering time zone                }
                 return result;
             }
             
             // Calculate flight duration considering time zone difference
-            // Pakistan is 2 hours ahead of Saudi Arabia
+            // Pakistan is 2 difference
+            // hours ahead of Saudi Arabia
+            function calculateDuration(depDate, depTime Pakistan is 2 hours ahead of Saudi Arabia
             function calculateDuration(depDate, depTime, arrDate, arrTime) {
+                // Create date, arrDate, arrTime) {
                 // Create date objects for departure and arrival
-                const depDateTime = new Date(`${depDate}T${depTime}:00`);
+                const objects for departure and arrival
+                const depDateTime = new Date(`${ depDateTime = new Date(`${depDate}T${depTime}:depDate}T${depTime}:00`);
+                const arrDateTime = new Date(`${arrDate}T00`);
                 const arrDateTime = new Date(`${arrDate}T${arrTime}:00`);
                 
-                // Convert arrival time from Pakistan time to Saudi time
-                // Since Pakistan is 2 hours ahead, subtract 2 hours from arrival time
-                const timeZoneDiff = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
-                const arrDateTimeSaudi = new Date(arrDateTime - timeZoneDiff);
+               ${arrTime}:00`);
                 
-                // Now calculate the difference between departure and adjusted arrival
-                const actualFlightTime = arrDateTimeSaudi - depDateTime;
+                // Convert arrival time // Convert arrival time from from Pakistan time to Saudi time
+ Pakistan time to Saudi time
+                // Since Pakistan is 2 hours ahead, subtract 2 hours from                // Since Pakistan is 2 hours ahead, subtract 2 hours from arrival time
+                const time arrival time
+                const timeZoneDiff = 2 * 60 * ZoneDiff = 2 * 60 * 60 * 1000; // 2 hours in milliseconds60 * 1000; // 2 hours in milliseconds
+                const arrDateTimeS
+                const arrDateTimeSaudi = new Date(arrDateTime -audi = new Date(arrDateTime - timeZoneDiff);
+                
+                // Now calculate the difference between departure timeZoneDiff);
+                
+ and adjusted arrival
+                const                // Now calculate the difference between departure and adjusted arrival
+                const actualFlightTime = arrDateTime actualFlightTime = arrDateTimeSaudi - depDateTime;
                 
                 // Calculate hours and minutes
-                const hours = Math.floor(actualFlightTime / (1000 * 60 * 60));
-                const minutes = Math.floor((actualFlightTime % (1000 * 60 * 60)) / (1000 * 60));
+                const hours = Math.floor(Saudi - depDateTime;
+                
+                // Calculate hours and minutes
+                const hours = Math.floor(actualFlightTime / (1000 * 60 * 60actualFlightTime / (1000 * 60 * 60));
+                const minutes = Math.floor(());
+                const minutes = Math.floor((actualFlightTime % (1000 * 60 * 60actualFlightTime % (1000 * 60 * 60)))) / (1000 / (1000 * 60));
+                
+                return `${hours}hr(s) ${ * 60));
                 
                 return `${hours}hr(s) ${minutes}min(s)`;
             }
             
+            // Format date to "DAYminutes}min(s)`;
+            }
+            
             // Format date to "DAY DD MON" format
+            function format DD MON" format
             function formatDate(dateStr) {
+                const date = new Date(dateDate(dateStr) {
                 const date = new Date(dateStr);
-                const days = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
-                const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+                const days = ['SUNDAY', 'MONDAY',Str);
+                const days = ['SUNDAY', 'MONDAY', 'TUESDAY', 'W 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
+               EDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
+                const months = ['JAN const months = ['JAN', 'FEB', 'MAR', 'APR', '', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG',MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'O 'SEP', 'OCT', 'NOV',CT', 'NOV', 'DEC'];
                 
-                return `${days[date.getDay()]} ${date.getDate()} ${months[date.getMonth()]}`;
+                return `${days 'DEC'];
+                
+                return `${days[date.getDay()]} ${date.getDate()} ${months[date.getDay()]} ${date.getDate()} ${months[date.getMonth()]}`[date.getMonth()]}`;
+            }
+            
+            // Generate itinerary
+            generateBtn.addEventListener(';
             }
             
             // Generate itinerary
             generateBtn.addEventListener('click', function() {
+click', function() {
                 // Get form values
+                const                // Get form values
                 const departure = document.getElementById('departure').value;
-                const arrival = document.getElementById('arrival').value;
+                const departure = document.getElementById('departure').value;
+                const arrival = document.getElementById('arrival'). arrival = document.getElementById('arrival').value;
+                const airline = document.getElementByIdvalue;
                 const airline = document.getElementById('airline').value;
+                const flightNumber('airline').value;
                 const flightNumber = document.getElementById('flightNumber').value;
-                const departureDate = document.getElementById('departureDate').value;
-                const departureTime = document.getElementById('departureTime').value;
-                const arrivalDate = document.getElementById('arrivalDate').value;
+                = document.getElementById('flightNumber').value;
+                const departureDate = document.getElementById const departureDate = document.getElementById('departureDate').value;
+               ('departureDate').value;
+                const departureTime = document.getElementById('departureTime const departureTime = document.getElementById('departureTime').value;
+                const arrivalDate =').value;
+                const arrivalDate document.getElementById('arrivalDate').value;
+                const arrivalTime = document.getElementById('arrivalTime = document.getElementById('arrivalDate').value;
                 const arrivalTime = document.getElementById('arrivalTime').value;
-                const customerEmail = document.getElementById('customerEmail').value;
+                const customer').value;
+                const customerEmail = document.getElementById('customerEmail').Email = document.getElementById('customerEmail').value;
+                const customerMobile = document.getElementById('customerMobilevalue;
                 const customerMobile = document.getElementById('customerMobile').value;
                 
                 // Get passenger details
+                const passengerEntries').value;
+                
+                // Get passenger details
                 const passengerEntries = document.querySelectorAll('.passenger-entry');
-                const passengers = [];
+                const passengers = = document.querySelectorAll('.passenger-entry');
+                const passengers [];
+                
+                for (let entry of passengerEntries) {
+                    const title = [];
                 
                 for (let entry of passengerEntries) {
                     const title = entry.querySelector('.passenger-title').value;
-                    const name = entry.querySelector('.passenger-name').value;
-                    const ticket = entry.querySelector('.passenger-ticket').value;
+                    = entry.querySelector('.passenger-title').value;
+                    const name = entry.querySelector('.passenger-name const name = entry.querySelector('.passenger-name').value;
+                   ').value;
+                    const ticket = entry.querySelector('.passenger-ticket const ticket = entry.querySelector('.passenger-ticket').value;
+                    
+                    if (!title || !').value;
                     
                     if (!title || !name || !ticket) {
+                        alert('name || !ticket) {
                         alert('Please fill in all passenger details');
+                        return;
+                   Please fill in all passenger details');
                         return;
                     }
                     
+                    passengers.push({ title, name }
+                    
                     passengers.push({ title, name, ticket });
+                }
+, ticket });
                 }
                 
                 // Validate form
-                if (!departure || !arrival || !airline || !flightNumber || !departureDate || !departureTime || !arrivalDate || !arrivalTime) {
+                if (!                
+                // Validate form
+                if (!departure || !arrival || !airlinedeparture || !arrival || !airline || !flightNumber || !departureDate || !flightNumber || !departureDate || !departureTime || !arrivalDate || !departureTime || !arrivalDate || ! || !arrivalTime) {
+                    alert('Please fill inarrivalTime) {
                     alert('Please fill in all required fields');
+                    return;
+                }
+ all required fields');
                     return;
                 }
                 
                 // Format passenger names for display
-                const passengerNames = passengers.map(p => `${p.title} ${p.name}`).join(', ');
+                const passenger                
+                // Format passenger names for display
+                const passengerNames = passengers.map(p => `${p.titleNames = passengers.map(p => `${p.title} ${p.name} ${p.name}`}`).join(',).join(', ');
                 
                 // Update preview
-                document.getElementById('previewTripTitle').textContent = `TRIP TO ${airports[arrival].city}`;
+                document.getElementById('previewTripTitle').textContent = `TRIP ');
+                
+                // Update preview
+                document.getElementById('previewTripTitle TO ${airports[arrival].city}`;
+                document.getElementById('previewPassengerName').textContent = passengerNames.toUpperCase').textContent = `TRIP TO ${airports[arrival].city}`;
                 document.getElementById('previewPassengerName').textContent = passengerNames.toUpperCase();
                 
-                document.getElementById('previewReservationCode').textContent = generateRandomCode(6);
-                document.getElementById('previewAirlineCode').textContent = `${generateRandomCode(6)} (${airline})`;
+                document.getElementById('previewReservationCode();
                 
-                document.getElementById('previewDepartureDate').textContent = formatDate(departureDate);
+                document.getElementById('previewReservationCode').textContent = generateRandomCode(6').textContent = generateRandomCode(6);
+                document.getElementById('previewAirlineCode').);
+                document.getElementById('previewAirlineCode').textContenttextContent = `${generateRandomCode( = `${generateRandomCode(6)} (${airline})`;
+                
+                document.getElementById6)} (${airline})`;
+                
+                document.getElementById('previewDepartureDate').text('previewDepartureDateContent = formatDate(departureDate);
+                
+               ').textContent = formatDate(departureDate);
                 
                 document.getElementById('previewDuration').textContent = calculateDuration(
-                    departureDate, departureTime, arrivalDate, arrivalTime
+                    document.getElementById('previewDuration').textContent = calculateDuration(
+                    departureDate departureDate, departureTime, arrivalDate, arrivalTime
+                );
+                
+               , departureTime, arrivalDate, arrivalTime
                 );
                 
                 // Set airline information
-                document.getElementById('previewAirlineName').textContent = airlines[airline].name;
+                document.getElementById('previewAirline // Set airline information
+                document.getElementById('previewAirlineName').textContent = airlinesName').textContent = airlines[airline].name;
+                document.getElementById('previewFlightCode').textContent = `${[airline].name;
                 document.getElementById('previewFlightCode').textContent = `${airline} ${flightNumber}`;
+airline} ${flightNumber}`;
                 
                 // Set airline logo if uploaded
-                const logoElement = document.getElementById('previewAirlineLogo');
+                const logo                
+                // Set airline logo if uploaded
+                const logoElement = document.getElementById('previewAirElement = document.getElementById('previewlineLogo');
                 if (uploadedLogo) {
                     logoElement.src = uploadedLogo;
-                    logoElement.style.display = 'block';
+                   AirlineLogo');
+                if (uploadedLogo) {
+                    logoElement.src = uploadedLogo;
+                    logoElement.style.display = ' logoElement.style.display = 'block';
+                } else {
+block';
                 } else {
                     logoElement.style.display = 'none';
                 }
                 
+                    logoElement.style.display = 'none';
+                }
+                
                 // Set company logo if uploaded
+                const                // Set company logo if uploaded
                 const companyLogoElement = document.getElementById('previewCompanyLogo');
+ companyLogoElement = document.getElementById('previewCompanyLogo');
                 const footerCompanyLogoElement = document.getElementById('previewFooterCompanyLogo');
+                if (uploadedCompany                const footerCompanyLogoElement = document.getElementById('previewFooterCompanyLogo');
                 if (uploadedCompanyLogo) {
+                    companyLogoElement.srcLogo) {
                     companyLogoElement.src = uploadedCompanyLogo;
+ = uploadedCompanyLogo;
                     companyLogoElement.style.display = 'block';
+                    footerCompany                    companyLogoElement.style.display = 'block';
                     footerCompanyLogoElement.src = uploadedCompanyLogo;
-                    footerCompanyLogoElement.style.display = 'block';
+LogoElement.src = uploadedCompanyLogo;
+                    footerCompany                    footerCompanyLogoElement.style.display = 'block';
+                } else {
+                    companyLogoElement.styleLogoElement.style.display = 'block';
                 } else {
                     companyLogoElement.style.display = 'none';
+                    footerCompany.display = 'none';
                     footerCompanyLogoElement.style.display = 'none';
                 }
                 
-                document.getElementById('previewDepartureCode').textContent = departure;
-                document.getElementById('previewDepartureCity').textContent = airports[departure].city;
-                document.getElementById('previewDepartureTime').textContent = departureTime;
+               LogoElement.style.display = 'none';
+                }
+                
+                document.getElementById('previewDepartureCode document.getElementById('previewDepartureCode').textContent = departure;
+                document.getElementById('preview').textContent = departure;
+                document.getElementById('previewDepartureCity').textContent = airports[depDepartureCity').textContent = airports[departure].city;
+                document.getElementById('previewarture].city;
+                document.getElementById('previewDepartureTime').textContent = departureTimeDepartureTime').textContent = departureTime;
+                
+                document;
                 
                 document.getElementById('previewArrivalCode').textContent = arrival;
-                document.getElementById('previewArrivalCity').textContent = airports[arrival].city;
+                document.getElementById.getElementById('previewArrivalCode').textContent = arrival;
+                document.getElementById('previewArr('previewArrivalCity').textContent = airports[ivalCity').textContent = airports[arrival].cityarrival].city;
+                document.getElementById('previewArrivalTime').textContent = arrivalTime;
+                
+;
                 document.getElementById('previewArrivalTime').textContent = arrivalTime;
                 
                 // Calculate distance
+                const distanceKey = `${dep                // Calculate distance
                 const distanceKey = `${departure}-${arrival}`;
+arture}-${arrival}`;
                 const distance = distances[distanceKey] || 1500;
-                document.getElementById('previewDistance').textContent = `${distance} Miles`;
+                const distance = distances[distanceKey] || 1500;
+                document.getElementById('                document.getElementById('previewDistance').textContent = `${distance}previewDistance').textContent = `${distance} Miles`;
+                
+                // Set meals based on time
+                const dep Miles`;
                 
                 // Set meals based on time
                 const depHour = parseInt(departureTime.split(':')[0]);
+                let mealsHour = parseInt(departureTime.split(':')[0]);
                 let meals = 'Snack';
+                if (depHour < 10) = 'Snack';
                 if (depHour < 10) meals = 'Breakfast';
-                else if (depHour < 15) meals = 'Lunch';
+ meals = 'Breakfast';
+                else if (depHour < 15) meals =                else if (depHour < 15) meals = 'Lunch';
+                else if ( 'Lunch';
                 else if (depHour < 20) meals = 'Dinner';
+                documentdepHour < 20) meals = 'Dinner';
                 document.getElementById('previewMeals').textContent = meals;
                 
-                // Calculate emissions (rough estimate)
-                const emission = (distance * 0.115).toFixed(2);
-                document.getElementById('previewEmission').textContent = `${emission} kg CO2`;
+               .getElementById('previewMeals').textContent = meals;
                 
-                // Update passenger list in preview
+                // Calculate emissions (rough estimate)
+                const emission = ( // Calculate emissions (rough estimate)
+                const emission = (distance * 0.115).todistance * 0.115).toFixed(2);
+                document.getElementById('previewEmissionFixed(2);
+                document.getElementById('previewEmission').textContent = `${emission}').textContent = `${emission} kg CO2`;
+                
+                // Update passenger kg CO2`;
+                
+                // Update passenger list list in preview
+                previewPassengerList.innerHTML = '';
+                in preview
                 previewPassengerList.innerHTML = '';
                 passengers.forEach(passenger => {
                     const passengerItem = document.createElement('div');
+                    passengerItem.className = 'pre passengers.forEach(passenger => {
+                    const passengerItem =view-passenger-item';
+                    passengerItem.innerHTML = `
+                        <span class="passenger-name">${passenger.title document.createElement('div');
                     passengerItem.className = 'preview-passenger-item';
                     passengerItem.innerHTML = `
-                        <span class="passenger-name">${passenger.title.toUpperCase()} ${passenger.name.toUpperCase()}</span>
-                        <span class="passenger-ticket">${passenger.ticket}</span>
+                        <span class="passenger-name">${.toUpperCase()} ${passenger.name.toUpperCase()}</span>
+                        <span class="passenger-ticket">passenger.title.toUpperCase()} ${passenger.name.toUpperCase()}</span>
+                        <span class="passenger-ticket">${passenger.ticket}</span${passenger.ticket}</span>
+                    `;
+                    previewPassengerList.appendChild(passenger>
                     `;
                     previewPassengerList.appendChild(passengerItem);
                 });
                 
+                // Update contactItem);
+                });
+                
                 // Update contact details if provided
-                if (customerEmail || customerMobile) {
+                if (customerEmail || customerMobile details if provided
+                if (customerEmail || customerMobile)) {
+                    if (customerEmail) {
+                        document.getElementById(' {
                     if (customerEmail) {
                         document.getElementById('previewCustomerEmail').textContent = customerEmail;
                     } else {
-                        document.getElementById('previewCustomerEmail').textContent = 'Not provided';
+                       previewCustomerEmail').textContent = customerEmail;
+                    } else {
+                        document.getElementById('previewCustomer document.getElementById('previewCustomerEmail').textContent = 'Not provided';
+                    }
+                    
+                    if (Email').textContent = 'Not provided';
                     }
                     
                     if (customerMobile) {
+customerMobile) {
                         document.getElementById('previewCustomerMobile').textContent = customerMobile;
+                    }                        document.getElementById('previewCustomerMobile').textContent = customerMobile;
+ else {
+                        document.getElementById('previewCustomerMobile').textContent = 'Not provided';
+                    }
                     } else {
                         document.getElementById('previewCustomerMobile').textContent = 'Not provided';
                     }
                     
+                    previewContact                    
                     previewContactDetails.style.display = 'block';
                 } else {
+                    previewContactDetails.styleDetails.style.display = 'block';
+                } else {
                     previewContactDetails.style.display = 'none';
+               .display = 'none';
                 }
                 
                 // Show preview
+                itineraryPreview.style.display = 'block }
+                
+                // Show preview
                 itineraryPreview.style.display = 'block';
+                itineraryPreview.scrollIntoView({ behavior:';
                 itineraryPreview.scrollIntoView({ behavior: 'smooth' });
             });
             
+            'smooth' });
+            });
+            
             // Print itinerary
+            printBtn.addEventListener('click', // Print itinerary
             printBtn.addEventListener('click', function() {
+                window.print();
+            function() {
                 window.print();
             });
             
             // Edit details
+            editBtn.addEventListener(' });
+            
+            // Edit details
             editBtn.addEventListener('click', function() {
+                itineraryPreview.style.display =click', function() {
                 itineraryPreview.style.display = 'none';
+                document.getElementById('flightForm 'none';
                 document.getElementById('flightForm').scrollIntoView({ behavior: 'smooth' });
+').scrollIntoView({ behavior: 'smooth' });
             });
+        });
+    </            });
         });
     </script>
 </body>
