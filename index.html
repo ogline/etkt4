@@ -786,6 +786,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Get all elements
             const form = document.getElementById('flightForm');
             const generateBtn = document.getElementById('generateBtn');
             const printBtn = document.getElementById('printBtn');
@@ -976,7 +977,7 @@
                     uploadedCompanyLogo = null;
                     companyLogoPreview.innerHTML = '';
                 }
-            };
+            });
             
             // Add event listener to add passenger button
             addPassengerBtn.addEventListener('click', addPassenger);
@@ -1176,8 +1177,6 @@
                         document.getElementById('previewCustomerMobile').textContent = customerMobile;
                     } else {
                         document.getElementById('previewCustomerMobile').textContent = 'Not provided';
-                    }
-Not provided';
                     }
                     
                     previewContactDetails.style.display = 'block';
